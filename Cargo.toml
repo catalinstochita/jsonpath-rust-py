@@ -1,0 +1,15 @@
+[package]
+name = "jsonpath-rust-py"
+version = "0.3.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "jsonpath_rust_py"
+crate-type = ["cdylib"]
+
+[dependencies]
+pyo3 = "0.18.3"
+jsonpath-rust = { git = "https://github.com/catalinstochita/jsonpath-rust", version = "0.3.1"}
+pythonize = "0.18.0"
+serde_json = "1.0.96"
