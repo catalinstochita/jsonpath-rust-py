@@ -1,5 +1,7 @@
+mod tests;
+
 use std::str::FromStr;
-use jsonpath_rust::{JsonPathFinder, JsonPathInst};
+use jsonpath_rust::{JsonPathFinder, JsonPathInst, JsonPathQuery};
 use pyo3::prelude::*;
 use pythonize::{depythonize, pythonize};
 use serde_json::Value;
@@ -22,9 +24,22 @@ fn find_slice<'a>(py: Python<'a>,json: &PyAny,path:&str) -> PyResult<PyObject>{
     }
 }
 
+#[pyfunction]
+fn path<'a>(py: Python<'a>,json: &PyAny,path:&str) -> PyResult<PyObject>{
+    let json: Value = depythonize(json).unwrap();
+
+    let result = &json.path(path).unwrap();
+
+    match pythonize(py,&result) {
+        Ok(ok) => {Ok(ok)}
+        Err(err) => {Err(PyErr::from(err))}
+    }
+}
+
 #[pymodule]
 fn jsonpath_rust_py(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(find_slice))?;
+    m.add_wrapped(wrap_pyfunction!(path))?;
 
     Ok(())
 }
