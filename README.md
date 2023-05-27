@@ -1,5 +1,7 @@
 # jsonpath-rust-py
 
+![PyPI - Downloads](https://img.shields.io/pypi/dm/jsonpath-rust-py?style=for-the-badge)
+
 ## The jsonpath description
 
 ### Functions
